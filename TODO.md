@@ -15,6 +15,24 @@ The Green has no Bluetooth radio, so `govee_ble` can't hear the sensors yet.
 Fallback if Bluetooth doesn't work out: Govee cloud API (key on hand; store it as the `GOVEE_API_KEY` env var).
 It needs a custom integration, since HA has no built-in Govee cloud sensor support.
 
+## Bring Alexa devices into HA
+
+Goal: everything controllable through Alexa is also integrated in HA, preferably locally.
+
+- [ ] Export the device list from the Alexa app (Devices → All Devices) and reconcile it against the table below
+- [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…) and 192.168.1.163 (`none.local`)
+- [ ] TP-Link Kasa: HS103 at .154, plus probably .157 and .183 (same manufacturer) → `tplink` integration (local)
+- [ ] iRobot Roomba at .160 → `roomba` integration (local; requires pressing the robot's Home button during setup)
+- [ ] RYSE SmartBridge (shades) at .167 → pair via HomeKit (`homekit_controller`)
+- [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo, so invisible on the LAN): decide per device.
+      Re-pair to HA (needs a Zigbee/Thread radio such as a ZBT-2) or leave on Alexa
+- [ ] Optional: Alexa Media Player (HACS) for the 4 Echo devices (.169, .170, .179, .180): TTS and announcements from HA
+- [ ] Optional: link the Home Assistant skill in the Alexa app (Nabu Casa cloud already has Alexa enabled, but the
+      skill isn't linked) so voice control goes Alexa → HA instead of directly to vendor skills
+- [ ] Assign areas to every new device and add groups/automations under `packages/`
+
+Already in HA: Cielo ×5, Miele ×2, Lutron Caséta, Ring, Chromecast.
+
 ## Cleanup
 
 - [ ] Delete the disabled HomeKit Device integration (Settings → Devices & services). It duplicated the
