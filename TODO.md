@@ -40,6 +40,7 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
   1. Roomba on its dock; close the iRobot app (the robot allows one local connection at a time)
   2. Settings → Devices & services → Add integration → **iRobot Roomba and Braava** → pick `Roomba (192.168.1.160)`
   3. At the "link" step: hold the Home button ~2 s until it beeps, then click Submit within ~30 s
+  4. Assign it to the area of its dock on the First Floor
 - [ ] RYSE SmartBridge (.167, d0:16:f0:20:81:25, FW 5.2.0) → pair via HomeKit (`homekit_controller`).
       Shades: "patio shade", "bedroom east", "bedroom West". HA hasn't discovered it, so it's either already paired
       elsewhere (unpair first) or HomeKit is off. Needs the 8-digit setup code (RYSE app ☰ menu or bridge sticker)
