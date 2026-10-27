@@ -21,7 +21,9 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 
 - [ ] Export the device list from the Alexa app (Devices → All Devices) and reconcile it against the table below
 - [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…) and 192.168.1.163 (`none.local`)
-- [ ] TP-Link Kasa: HS103 at .154, plus probably .157 and .183 (same manufacturer) → `tplink` integration (local)
+- [x] TP-Link Kasa HS103 "Bedroom Lamp" (.157) and "Kitchen Fan" (.183) → `tplink` (legacy local protocol, no login)
+- [ ] TP-Link Kasa HS103 at .154: newer firmware (KLAP, port 80 only). Add in the UI with TP-Link account credentials
+      (Settings → Devices & services → Add integration → TP-Link Smart Home → host `192.168.1.154`)
 - [ ] iRobot Roomba at .160 → `roomba` integration (local; requires pressing the robot's Home button during setup)
 - [ ] RYSE SmartBridge (shades) at .167 → pair via HomeKit (`homekit_controller`)
 - [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo, so invisible on the LAN): decide per device.
