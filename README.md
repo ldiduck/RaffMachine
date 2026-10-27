@@ -26,6 +26,13 @@ The repo root mirrors `/config` on the device. Runtime state (`.storage/`, the r
 Deployment goes over SSH via the Terminal & SSH add-on (`root@homeassistant.local:22`, key
 `~/.ssh/ha_green_ed25519`) and reloads via the REST API using the `HOME_ASSISTANT_TOKEN` environment variable.
 
+## Claude Code integration
+
+`.mcp.json` connects Claude Code (when opened in this repo) to HA's built-in MCP Server integration at
+`http://homeassistant.local/api/mcp`. The token comes from the `HOME_ASSISTANT_TOKEN` environment variable; nothing
+secret is committed. Claude can only see and control entities exposed to Assist (Settings → Voice assistants →
+Expose), so the locks, which are unexposed, are out of reach.
+
 ## Notes
 
 - Core listens on port 80. That's a Supervisor setting (`ha core info`), not `configuration.yaml`.
