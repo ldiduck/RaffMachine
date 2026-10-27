@@ -1,0 +1,35 @@
+# Lighting: Lutron Caséta (lutron_caseta integration via Smart Bridge 2).
+
+light:
+  - platform: group
+    name: Kitchen Lights
+    unique_id: kitchen_lights
+    entities:
+      - light.kitchen_kitchen_main_lights
+      - light.kitchen_kitchen_table_lights
+
+  - platform: group
+    name: Living Room Lights
+    unique_id: living_room_lights
+    entities:
+      - light.living_room_living_room_main_lights
+      - light.living_room_living_room_floor_lamp
+
+  # Every interior dimmer. The porch/foyer Divas are on/off switches, handled below.
+  - platform: group
+    name: Interior Lights
+    unique_id: interior_lights
+    entities:
+      - light.kitchen_kitchen_main_lights
+      - light.kitchen_kitchen_table_lights
+      - light.living_room_living_room_main_lights
+      - light.living_room_living_room_floor_lamp
+      - light.dining_room_dining_room_main_lights
+
+switch:
+  - platform: group
+    name: Entry Lights
+    unique_id: entry_lights
+    entities:
+      - switch.front_porch_front_porch_sconces
+      - switch.front_foyer_front_foyer_main_lights

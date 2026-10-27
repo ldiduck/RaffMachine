@@ -1,0 +1,17 @@
+name: Config check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate against the version running on the Green
+        uses: frenck/action-home-assistant@v1
+        with:
+          path: "."
+          secrets: ci/fake_secrets.yaml
+          version: "2026.10.4"

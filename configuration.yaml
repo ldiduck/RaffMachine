@@ -1,0 +1,19 @@
+# DRAFT — not yet reconciled with the live /config/configuration.yaml on the Green.
+# The live instance serves on port 80 (default is 8123), so the real file likely has an
+# `http:` block or something else this draft lacks. Merge the live file in before deploying.
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+homeassistant:
+  # Each file in packages/ is a self-contained slice of config (entities, automations,
+  # scripts) for one concern. Prefer adding code there over growing this file.
+  packages: !include_dir_named packages
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+# UI-editable automations/scripts/scenes live in these files; the UI rewrites them.
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

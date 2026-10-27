@@ -1,0 +1,24 @@
+# Secrets — never commit. CI uses ci/fake_secrets.yaml instead.
+secrets.yaml
+
+# Runtime state owned by Home Assistant, not by this repo
+.storage/
+.cloud/
+.HA_VERSION
+home-assistant_v2.db*
+home-assistant.log*
+*.db-shm
+*.db-wal
+deps/
+tts/
+backups/
+blueprints/automation/homeassistant/
+blueprints/script/homeassistant/
+custom_components/*/__pycache__/
+__pycache__/
+*.pyc
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db
