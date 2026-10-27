@@ -1,0 +1,2 @@
+# Config is deployed to Linux (HAOS); keep LF regardless of the editing machine.
+* text=auto eol=lf
