@@ -38,20 +38,25 @@ $remote = @'
 set -e
 cd /homeassistant
 backup=/tmp/predeploy.tar
-# Save current versions of every file the archive will overwrite (new files have nothing to save).
+# Save current versions of every file the archive will overwrite (new files have nothing to save),
+# and note which directories don't exist yet so rollback can remove them.
 tar -tf /tmp/deploy.tar | grep -v '/$' | while read -r f; do [ -e "$f" ] && echo "$f"; done > /tmp/existing.lst
+tar -tf /tmp/deploy.tar | grep '/$' | while read -r d; do [ -e "$d" ] || echo "$d"; done | sort -r > /tmp/newdirs.lst
 tar -cf "$backup" -T /tmp/existing.lst
 tar -xf /tmp/deploy.tar
-rollback() { tar -tf /tmp/deploy.tar | grep -v '/$' | grep -vxF -f /tmp/existing.lst | xargs -r rm -f; tar -xf "$backup"; }
+rollback() {
+  tar -tf /tmp/deploy.tar | grep -v '/$' | grep -vxF -f /tmp/existing.lst | xargs -r rm -f
+  tar -xf "$backup"
+  xargs -r rmdir < /tmp/newdirs.lst
+}
 if ! ha core check; then rollback; echo 'CHECK FAILED - rolled back'; exit 1; fi
 if [ "$DRYRUN" = 1 ]; then rollback; echo 'Dry run OK - rolled back'; exit 0; fi
 echo "Deployed $REV"
 '@ -replace "`r", ''
 
-# Windows PowerShell otherwise prefixes piped stdin with a UTF-8 BOM, which breaks the first sh line.
-$OutputEncoding = New-Object Text.UTF8Encoding $false
-$env_ = "DRYRUN=$([int][bool]$DryRun) REV=$rev"
-$remote | & $Ssh -i $Key -o BatchMode=yes $HaHost "$env_ sh -s"
+# Sent as base64 in the command line: piping to a native exe from Windows PowerShell injects a BOM.
+$b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($remote))
+& $Ssh -i $Key -o BatchMode=yes $HaHost "echo $b64 | base64 -d | DRYRUN=$([int][bool]$DryRun) REV=$rev sh"
 if ($LASTEXITCODE) { throw "Deploy of $rev failed (device left unchanged)" }
 if ($DryRun) { return }
 
