@@ -40,8 +40,8 @@ cd /homeassistant
 backup=/tmp/predeploy.tar
 # Save current versions of every file the archive will overwrite (new files have nothing to save),
 # and note which directories don't exist yet so rollback can remove them.
-tar -tf /tmp/deploy.tar | grep -v '/$' | while read -r f; do [ -e "$f" ] && echo "$f"; done > /tmp/existing.lst
-tar -tf /tmp/deploy.tar | grep '/$' | while read -r d; do [ -e "$d" ] || echo "$d"; done | sort -r > /tmp/newdirs.lst
+tar -tf /tmp/deploy.tar | grep -v '/$' | while read -r f; do if [ -e "$f" ]; then echo "$f"; fi; done > /tmp/existing.lst
+tar -tf /tmp/deploy.tar | grep '/$' | while read -r d; do if [ ! -e "$d" ]; then echo "$d"; fi; done | sort -r > /tmp/newdirs.lst
 tar -cf "$backup" -T /tmp/existing.lst
 tar -xf /tmp/deploy.tar
 rollback() {
