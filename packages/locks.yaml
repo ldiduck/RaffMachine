@@ -1,0 +1,38 @@
+# Locks: Schlage Encode (front door) and Arrive (vestibule) via the schlage cloud integration.
+# Both are unexposed from voice assistants; see TODO.md for the pending unlock policy.
+
+automation:
+  - id: lock_battery_low
+    alias: Lock battery low
+    description: >-
+      Push to Lance's phone when a lock battery drops below 20%, and again each morning while it stays low.
+    mode: single
+    triggers:
+      - trigger: numeric_state
+        entity_id:
+          - sensor.front_door_lock_battery
+          - sensor.vestibule_lock_battery
+        below: 20
+        # Ignore brief dips (e.g. a reading during a motor run).
+        for: "00:10:00"
+      - trigger: time
+        at: "09:00:00"
+    variables:
+      low: >-
+        {%- set ns = namespace(low=[]) -%}
+        {%- for e in ['sensor.front_door_lock_battery', 'sensor.vestibule_lock_battery']
+              if has_value(e) and states(e) | float < 20 -%}
+          {%- set ns.low = ns.low + [e] -%}
+        {%- endfor -%}
+        {{ ns.low }}
+    conditions:
+      - condition: template
+        value_template: "{{ low | count > 0 }}"
+    actions:
+      - action: notify.mobile_app_lances_phone
+        data:
+          title: Lock battery low
+          message: >-
+            {% for e in low -%}
+            {{ device_attr(device_id(e), 'name') }}: {{ states(e) }}%{{ '\n' if not loop.last }}
+            {%- endfor %}
