@@ -20,8 +20,9 @@ It needs a custom integration, since HA has no built-in Govee cloud sensor suppo
 Goal: everything controllable through Alexa is also integrated in HA, preferably locally.
 
 - [x] Inventory devices from the Alexa app (2026-10-27, per-device settings screenshots) and a LAN scan
-- [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…, no common ports open) and
-      192.168.1.163 (`none.local`, TCP 8888 open but not HTTP). Likely candidates: the Vornado fan and the ice maker
+- [ ] Identify unknown LAN devices (no hostname, no common ports open): .161 (78:1C:3C), .80/.173 (same MAC
+      5C:E7:53:B0:48:6A), .174 (5C:E7:53), .172 (`lwip0`, an embedded Wi-Fi stack), .178 (`dhcp_client`).
+      Likely candidates include the Vornado fan and the ice maker. (.163 turned out to be an Echo)
 - [x] Schlage locks → `schlage` integration (cloud): `lock.front_door` (Encode, BE489WB2) and `lock.vestibule`
       (Arrive, be459wb). Both are unexposed from Alexa, Google and Assist. HA can't restrict unlock per entity,
       so voice exposure is the control
@@ -46,7 +47,13 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
       elsewhere (unpair first) or HomeKit is off. Needs the 8-digit setup code (RYSE app ☰ menu or bridge sticker)
 - [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo): none found in the inventory. Revisit if
       one turns up; it would need a Zigbee/Thread radio (e.g. ZBT-2) to move to HA
-- [ ] Optional: Alexa Media Player (HACS) for the 4 Echo devices (.169, .170, .179, .180): TTS and announcements from HA
+- [ ] Echo devices → Alexa Media Player: 5 Echoes at .163, .169, .170, .179, .180 (port fingerprint
+      4070/55442/55443/8888). **Waiting for HA 2026.11** (expected ~Nov 4), which replaces HACS with the built-in
+      Marketplace; decided not to install HACS now. Then:
+  1. Update HA to 2026.11
+  2. Settings → Marketplace → install Alexa Media Player, restart
+  3. Sign in to Amazon in the HA UI (email, password, 2FA)
+  4. Name the Echoes and assign rooms; Vornado fan control via Alexa commands follows from this
 - [ ] Optional: link the Home Assistant skill in the Alexa app (Nabu Casa cloud already has Alexa enabled, but the
       skill isn't linked) so voice control goes Alexa → HA instead of directly to vendor skills
 - [ ] Assign areas to every new device and add groups/automations under `packages/`
