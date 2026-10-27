@@ -36,7 +36,10 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 - [x] TP-Link Kasa HS103 "Bedroom Lamp" (.157) and "Kitchen Fan" (.183) → `tplink` (legacy local protocol, no login)
 - [ ] TP-Link Kasa HS103 at .154: newer firmware (KLAP, port 80 only). Add in the UI with TP-Link account credentials
       (Settings → Devices & services → Add integration → TP-Link Smart Home → host `192.168.1.154`)
-- [ ] iRobot Roomba at .160 → `roomba` integration (local; requires pressing the robot's Home button during setup)
+- [ ] iRobot Roomba at .160 → `roomba` integration (local). HA discovers it; needs someone at the robot:
+  1. Roomba on its dock; close the iRobot app (the robot allows one local connection at a time)
+  2. Settings → Devices & services → Add integration → **iRobot Roomba and Braava** → pick `Roomba (192.168.1.160)`
+  3. At the "link" step: hold the Home button ~2 s until it beeps, then click Submit within ~30 s
 - [ ] RYSE SmartBridge (.167, d0:16:f0:20:81:25, FW 5.2.0) → pair via HomeKit (`homekit_controller`).
       Shades: "patio shade", "bedroom east", "bedroom West". HA hasn't discovered it, so it's either already paired
       elsewhere (unpair first) or HomeKit is off. Needs the 8-digit setup code (RYSE app ☰ menu or bridge sticker)
