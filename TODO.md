@@ -22,10 +22,12 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 - [x] Inventory devices from the Alexa app (2026-10-27, per-device settings screenshots) and a LAN scan
 - [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…, no common ports open) and
       192.168.1.163 (`none.local`, TCP 8888 open but not HTTP). Likely candidates: the Vornado fan and the ice maker
-- [ ] Schlage locks → `schlage` integration (cloud, Schlage Home login). One account should bring in both:
-  - Front Door Lock: Schlage Encode DB Wi-Fi, Living room (supported). Alexa unlock is disabled; keep HA lock-only
-  - Vestibule Lock: Schlage Arrive, Vestibule (newer model, so support is unconfirmed; check for Matter in the
-    Schlage Home app as a local alternative). Alexa unlock is enabled with an access code
+- [x] Schlage locks → `schlage` integration (cloud): `lock.front_door` (Encode, BE489WB2) and `lock.vestibule`
+      (Arrive, be459wb). Both are unexposed from Alexa, Google and Assist. HA can't restrict unlock per entity,
+      so voice exposure is the control
+- [ ] Decide on auto-lock: both locks have `select.*_auto_lock_time` = 0 (off)
+- [ ] Battery automation: notify the phone when `sensor.vestibule_battery` / `sensor.front_door_battery_2` < 20%
+      (the `_2` suffix is because the Ring doorbell already took `sensor.front_door_battery`; rename both for clarity)
 - [ ] Vornado Transom fan "exhaust" (Lounge): no HA integration known, and it looks Alexa-only (Alexa Connect Kit
       style settings page). Fallback: control it via Alexa Media Player (HA → Alexa → fan, no state feedback)
 - [ ] EcozyHome Smart Ice Machine "Lounge Ice Maker" (Lounge), connected via the EcozyHome skill. Check whether
