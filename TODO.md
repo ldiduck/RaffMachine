@@ -35,8 +35,8 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 - [ ] EcozyHome Smart Ice Machine "Lounge Ice Maker" (Lounge), connected via the EcozyHome skill. Check whether
       the EcozyHome app is a Tuya white-label (Smart Life login works?) → built-in `tuya` integration
 - [x] TP-Link Kasa HS103 "Bedroom Lamp" (.157) and "Kitchen Fan" (.183) → `tplink` (legacy local protocol, no login)
-- [ ] TP-Link Kasa HS103 at .154: newer firmware (KLAP, port 80 only). Add in the UI with TP-Link account credentials
-      (Settings → Devices & services → Add integration → TP-Link Smart Home → host `192.168.1.154`)
+- [x] TP-Link Kasa HS103 "Lounge Fan" (.154) → `tplink` (newer KLAP firmware, added with TP-Link credentials).
+      All three plugs assigned to areas: Lounge Fan → Lounge, Kitchen Fan → Kitchen, Bedroom Lamp → Bedroom
 - [ ] iRobot Roomba at .160 → `roomba` integration (local). HA discovers it; needs someone at the robot:
   1. Roomba on its dock; close the iRobot app (the robot allows one local connection at a time)
   2. Settings → Devices & services → Add integration → **iRobot Roomba and Braava** → pick `Roomba (192.168.1.160)`
