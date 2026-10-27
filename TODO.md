@@ -19,15 +19,26 @@ It needs a custom integration, since HA has no built-in Govee cloud sensor suppo
 
 Goal: everything controllable through Alexa is also integrated in HA, preferably locally.
 
-- [ ] Export the device list from the Alexa app (Devices → All Devices) and reconcile it against the table below
-- [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…) and 192.168.1.163 (`none.local`)
+- [x] Inventory devices from the Alexa app (2026-10-27, per-device settings screenshots) and a LAN scan
+- [ ] Identify the unknown LAN devices: 192.168.1.161 (78:1C:3C:…, no common ports open) and
+      192.168.1.163 (`none.local`, TCP 8888 open but not HTTP). Likely candidates: the Vornado fan and the ice maker
+- [ ] Schlage locks → `schlage` integration (cloud, Schlage Home login). One account should bring in both:
+  - Front Door Lock: Schlage Encode DB Wi-Fi, Living room (supported). Alexa unlock is disabled; keep HA lock-only
+  - Vestibule Lock: Schlage Arrive, Vestibule (newer model, so support is unconfirmed; check for Matter in the
+    Schlage Home app as a local alternative). Alexa unlock is enabled with an access code
+- [ ] Vornado Transom fan "exhaust" (Lounge): no HA integration known, and it looks Alexa-only (Alexa Connect Kit
+      style settings page). Fallback: control it via Alexa Media Player (HA → Alexa → fan, no state feedback)
+- [ ] EcozyHome Smart Ice Machine "Lounge Ice Maker" (Lounge), connected via the EcozyHome skill. Check whether
+      the EcozyHome app is a Tuya white-label (Smart Life login works?) → built-in `tuya` integration
 - [x] TP-Link Kasa HS103 "Bedroom Lamp" (.157) and "Kitchen Fan" (.183) → `tplink` (legacy local protocol, no login)
 - [ ] TP-Link Kasa HS103 at .154: newer firmware (KLAP, port 80 only). Add in the UI with TP-Link account credentials
       (Settings → Devices & services → Add integration → TP-Link Smart Home → host `192.168.1.154`)
 - [ ] iRobot Roomba at .160 → `roomba` integration (local; requires pressing the robot's Home button during setup)
-- [ ] RYSE SmartBridge (shades) at .167 → pair via HomeKit (`homekit_controller`)
-- [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo, so invisible on the LAN): decide per device.
-      Re-pair to HA (needs a Zigbee/Thread radio such as a ZBT-2) or leave on Alexa
+- [ ] RYSE SmartBridge (.167, d0:16:f0:20:81:25, FW 5.2.0) → pair via HomeKit (`homekit_controller`).
+      Shades: "patio shade", "bedroom east", "bedroom West". HA hasn't discovered it, so it's either already paired
+      elsewhere (unpair first) or HomeKit is off. Needs the 8-digit setup code (RYSE app ☰ menu or bridge sticker)
+- [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo): none found in the inventory. Revisit if
+      one turns up; it would need a Zigbee/Thread radio (e.g. ZBT-2) to move to HA
 - [ ] Optional: Alexa Media Player (HACS) for the 4 Echo devices (.169, .170, .179, .180): TTS and announcements from HA
 - [ ] Optional: link the Home Assistant skill in the Alexa app (Nabu Casa cloud already has Alexa enabled, but the
       skill isn't linked) so voice control goes Alexa → HA instead of directly to vendor skills
