@@ -5,6 +5,7 @@
 The Green has no Bluetooth radio, so `govee_ble` can't hear the sensors yet.
 
 - [x] Order TP-Link UB500 (Realtek RTL8761B) and a USB-A male-to-female extension (1–2 m, USB 2.0 is fine)
+      (Amazon order 111-9923630-0984235)
 - [ ] Plug the UB500 into the Green via the extension, ideally on a USB 2.0 port, at least a foot or two from the box
 - [ ] Confirm HA detects the adapter (Settings → Devices & services → Bluetooth)
 - [ ] Confirm `govee_ble` discovers each H5179 and add them
