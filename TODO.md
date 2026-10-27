@@ -26,8 +26,9 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
       (Arrive, be459wb). Both are unexposed from Alexa, Google and Assist. HA can't restrict unlock per entity,
       so voice exposure is the control
 - [ ] Decide on auto-lock: both locks have `select.*_auto_lock_time` = 0 (off)
-- [ ] Battery automation: notify the phone when `sensor.vestibule_battery` / `sensor.front_door_battery_2` < 20%
-      (the `_2` suffix is because the Ring doorbell already took `sensor.front_door_battery`; rename both for clarity)
+- [x] Battery alert (`packages/locks.yaml`): push to the phone when a lock battery is < 20%, repeated daily at
+      09:00 while low. Entities renamed to `sensor.front_door_lock_battery` / `sensor.vestibule_lock_battery`
+      (the Ring doorbell owns `sensor.front_door_battery`)
 - [ ] Vornado Transom fan "exhaust" (Lounge): no HA integration known, and it looks Alexa-only (Alexa Connect Kit
       style settings page). Fallback: control it via Alexa Media Player (HA → Alexa → fan, no state feedback)
 - [ ] EcozyHome Smart Ice Machine "Lounge Ice Maker" (Lounge), connected via the EcozyHome skill. Check whether
