@@ -1,10 +1,15 @@
 # Secrets — never commit. CI uses ci/fake_secrets.yaml instead.
 secrets.yaml
 
+# Integration credentials written by HA (e.g. lutron_caseta-*-key.pem is the bridge's TLS private key)
+*.pem
+
 # Runtime state owned by Home Assistant, not by this repo
 .storage/
 .cloud/
+.cache/
 .HA_VERSION
+.ha_run.lock
 home-assistant_v2.db*
 home-assistant.log*
 *.db-shm
