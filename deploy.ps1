@@ -48,6 +48,8 @@ if [ "$DRYRUN" = 1 ]; then rollback; echo 'Dry run OK - rolled back'; exit 0; fi
 echo "Deployed $REV"
 '@ -replace "`r", ''
 
+# Windows PowerShell otherwise prefixes piped stdin with a UTF-8 BOM, which breaks the first sh line.
+$OutputEncoding = New-Object Text.UTF8Encoding $false
 $env_ = "DRYRUN=$([int][bool]$DryRun) REV=$rev"
 $remote | & $Ssh -i $Key -o BatchMode=yes $HaHost "$env_ sh -s"
 if ($LASTEXITCODE) { throw "Deploy of $rev failed (device left unchanged)" }
