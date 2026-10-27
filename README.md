@@ -18,11 +18,16 @@ The repo root mirrors `/config` on the device. Runtime state (`.storage/`, the r
 
 ## Workflow
 
-1. Edit YAML here, push. CI validates the config.
-2. Deploy to `/config` (method TBD: Git pull add-on or `scp` via the SSH add-on).
-3. Reload the affected domain (Developer Tools → YAML), or restart if a new integration was added.
+1. Edit YAML here and commit. Pushing runs the CI config check.
+2. `.\deploy.ps1 -DryRun` uploads HEAD, runs `ha core check` on the device, then rolls back.
+3. `.\deploy.ps1` deploys HEAD and reloads YAML. Use `-Restart` when `configuration.yaml` changes or an
+   integration is added or removed. A failed check restores the previous files automatically.
 
-## Status
+Deployment goes over SSH via the Terminal & SSH add-on (`root@homeassistant.local:22`, key
+`~/.ssh/ha_green_ed25519`) and reloads via the REST API using the `HOME_ASSISTANT_TOKEN` environment variable.
 
-- `configuration.yaml` is a **draft** and must be merged with the live file before the first deploy.
-  The device serves on port 80, so the live file probably contains settings this draft lacks.
+## Notes
+
+- Core listens on port 80. That's a Supervisor setting (`ha core info`), not `configuration.yaml`.
+- If you edit automations in the UI, HA rewrites `automations.yaml` on the device. Copy it back into the
+  repo before the next deploy, or the deploy will overwrite those edits.
