@@ -61,6 +61,20 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 
 Already in HA: Cielo ×5, Miele ×2, Lutron Caséta, Ring, Chromecast.
 
+## Ceiling fan with light (single-pole wall switch)
+
+Goal: control the fan and its light separately from HA, with a Caséta Pico on the wall. Lutron makes no Caséta
+canopy module, and the PD-FSQN wall fan control drives only one load, so the plan is a Zigbee canopy module.
+
+- [ ] Find the fan's brand and model (sticker on top of the motor housing, inside the canopy, or in the light kit)
+      and note whether it has a built-in remote receiver or a DC motor
+- [ ] Pick a canopy module that fits and suits the motor: Hampton Bay / King of Fans Zigbee module, or Inovelli's
+      canopy module (alternative: Inovelli fan/light wall switch + canopy module, which works without HA)
+- [ ] Install the module in the canopy (breaker off; electrician if unsure)
+- [ ] Wire the wall box so the fan always has power (line to load), and mount a Pico over it with a wall-plate bracket
+- [ ] Pair the module with ZHA, then add a `packages/` automation mapping the Pico buttons to fan speed and light.
+      The Pico only works through HA, so keep the fan's remote or pull chains as a fallback
+
 ## Cleanup
 
 - [ ] Delete the disabled HomeKit Device integration (Settings → Devices & services). It duplicated the
