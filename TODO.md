@@ -68,9 +68,10 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
   2. Settings → Devices & services → Add integration → **iRobot Roomba and Braava** → pick `Roomba (192.168.1.160)`
   3. At the "link" step: hold the Home button ~2 s until it beeps, then click Submit within ~30 s
   4. Assign it to the area of its dock on the First Floor
-- [ ] RYSE SmartBridge (.167, d0:16:f0:20:81:25, FW 5.2.0) → pair via HomeKit (`homekit_controller`).
-      Shades: "patio shade", "bedroom east", "bedroom West". HA hasn't discovered it, so it's either already paired
-      elsewhere (unpair first) or HomeKit is off. Needs the 8-digit setup code (RYSE app ☰ menu or bridge sticker)
+- [x] RYSE SmartBridge (BR-0201, .167, d0:16:f0:20:81:25, FW 5.2.0) → paired via HomeKit (`homekit_controller`)
+      on 2026-10-29, using the setup code from the bridge's bottom sticker (kept out of this public repo).
+      Shades: "patio shade", "bedroom east", "bedroom West". The Alexa RYSE skill uses RYSE's cloud and can stay
+- [ ] Assign areas to the three RYSE shades
 - [ ] Echo-hub devices (Zigbee/Bluetooth/Matter paired directly to an Echo): none found in the inventory. Revisit if
       one turns up; it would need a Zigbee/Thread radio (e.g. ZBT-2) to move to HA
 - [ ] Echo devices → Alexa Media Player: 5 Echoes at .163, .169, .170, .179, .180 (port fingerprint
@@ -117,8 +118,8 @@ Inventory (2026-10-29):
 
 ## Cleanup
 
-- [ ] Delete the disabled HomeKit Device integration (Settings → Devices & services). It duplicated the
-      Lutron devices, and deleting it frees the bridge's HomeKit pairing slot.
+- [x] Delete the disabled HomeKit Device integration (Settings → Devices & services). It duplicated the
+      Lutron devices, and deleting it frees the bridge's HomeKit pairing slot. (Done 2026-10-29)
 
 ## Next config
 
