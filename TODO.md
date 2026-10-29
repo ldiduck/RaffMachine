@@ -2,19 +2,44 @@
 
 ## Govee H5179 sensors (Bluetooth)
 
-The Green has no Bluetooth radio, so `govee_ble` can't hear the sensors yet.
+The Green has no Bluetooth radio of its own; a TP-Link UB500 now provides it.
 
-- [x] Order TP-Link UB500 (Realtek RTL8761B) and a USB-A male-to-female extension (1–2 m, USB 2.0 is fine)
-      (Amazon order 111-9923630-0984235)
-- [ ] Plug the UB500 into the Green via the extension, ideally on a USB 2.0 port, at least a foot or two from the box
-- [ ] Confirm HA detects the adapter (Settings → Devices & services → Bluetooth)
-- [ ] Confirm `govee_ble` discovers each H5179 and add them
+- [x] Order TP-Link UB500 and a USB-A male-to-female extension (1–2 m, USB 2.0 is fine)
+      (Amazon order 111-9923630-0984235). The unit received is the Bluetooth 5.4 revision, and HA supports it
+- [x] Plug the UB500 into the USB hub via a 2 m extension (2026-10-29)
+- [x] Confirm HA detects the adapter (Settings → Devices & services → Bluetooth)
+- [x] Confirm `govee_ble` discovers each H5179 and add them
+- iBeacon Tracker was also discovered and ignored. Revisit it for room-level presence
 - [ ] Assign areas and give the sensors meaningful entity IDs
 - [ ] Add any sensor-based config (e.g. climate automations) to a `packages/` file
 - [ ] If some sensors are out of range: add an ESPHome Bluetooth proxy (ESP32, e.g. M5Stack Atom Lite) near them
 
 Fallback if Bluetooth doesn't work out: Govee cloud API (key on hand; store it as the `GOVEE_API_KEY` env var).
 It needs a custom integration, since HA has no built-in Govee cloud sensor support.
+
+## Z-Wave and Zigbee radios
+
+Hardware (2026-10-29): StarTech ST7202USB powered USB 2.0 hub (run it on its power adapter) on the Green, with the
+UB500 and an Aeotec Z-Stick 10 Pro (ZWA060-A, US 908.42 MHz, Z-Wave 800/LR + Zigbee 3.0) each on a 2 m AINOPE
+extension, a few feet apart. The stick exposes two serial ports, one per radio; select `/dev/serial/by-id/...` paths.
+
+- [x] Z-Wave: Z-Wave integration + Z-Wave JS add-on, on one of the stick's ports (added manually; not auto-discovered)
+- [x] Zigbee: ZHA on the other port, EZSP radio, 115200 baud, software flow control
+- [ ] Check Z-Wave JS is v15.8.0 or newer so the stick isn't shown as unknown
+
+## Aqara window sensors (Zigbee, ZHA)
+
+Six Aqara MCCGQ11LM door/window sensors (two 3-packs). They're Zigbee, so they pair through ZHA; the "Aqara Hub is
+Required" label only applies to Aqara's app. Battery: CR1632 (not CR2032). Mount at ≤ 2 m.
+
+- [ ] Pair one at a time: ZHA → Add device, hold the sensor button ~5 s until it blinks, keep it near the stick, and tap
+      the button every few seconds if the interview stalls
+- [ ] After each one, name it after its window and assign the area before pairing the next
+- [ ] Test each by moving the magnet away and back (open ↔ closed), then mount: sensor on the frame side, magnet on the
+      sash
+- [ ] Four for the upstairs windows; two spares (candidates: front door, vestibule, alongside the lock automations)
+- [ ] Buy spare CR1632 cells
+- [ ] Add window-open logic to `packages/` (e.g. warn when leaving with a window open, or pause the Cielo units)
 
 ## Bring Alexa devices into HA
 
