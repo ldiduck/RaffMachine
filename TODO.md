@@ -100,6 +100,21 @@ canopy module, and the PD-FSQN wall fan control drives only one load, so the pla
 - [ ] Pair the module with ZHA, then add a `packages/` automation mapping the Pico buttons to fan speed and light.
       The Pico only works through HA, so keep the fan's remote or pull chains as a fallback
 
+## TV and soundbar
+
+Inventory (2026-10-29):
+- TV: Panasonic TC-P50S30, 50" plasma (Aug 2011). Ports: LAN (empty), HDMI 1 (ARC), HDMI 2, side HDMI and USB,
+  optical out. Built-in Wi-Fi is doubtful, so assume Ethernet is needed
+- Soundbar: Definitive Technology W Studio (DTS Play-Fi). HDMI in 1–3 and out; WAN MAC 60:B6:06:02:47:DB
+- Chromecast on soundbar HDMI 1, already in HA
+
+- [ ] Decide what to automate (e.g. all off when leaving, a "movie" scene, volume)
+- [ ] Use the Chromecast as the main control point: enable HDMI-CEC on the TV (VIERA Link) and soundbar so casting
+      wakes them and switches inputs
+- [ ] TV: run Ethernet to the LAN port and try the built-in `panasonic_viera` integration. Support for a 2011
+      model is uncertain; expect power-off, volume and input at best (network power-on often isn't possible)
+- [ ] Soundbar: no known HA integration for Play-Fi; check whether it shows up on the LAN and if anything exposes it
+
 ## Cleanup
 
 - [ ] Delete the disabled HomeKit Device integration (Settings → Devices & services). It duplicated the
