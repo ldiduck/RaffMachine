@@ -56,8 +56,9 @@ Goal: everything controllable through Alexa is also integrated in HA, preferably
 - [x] Battery alert (`packages/locks.yaml`): push to the phone when a lock battery is < 20%, repeated daily at
       09:00 while low. Entities renamed to `sensor.front_door_lock_battery` / `sensor.vestibule_lock_battery`
       (the Ring doorbell owns `sensor.front_door_battery`)
-- [ ] Vornado Transom fan "exhaust" (Lounge): no HA integration known, and it looks Alexa-only (Alexa Connect Kit
-      style settings page). Fallback: control it via Alexa Media Player (HA → Alexa → fan, no state feedback)
+- [ ] On hold (not installed in the window as of 2026-10-29): Vornado Transom fan "exhaust" (Lounge). No HA
+      integration known, and it looks Alexa-only (Alexa Connect Kit style settings page). When it's back in:
+      control it via Alexa Media Player (HA → Alexa → fan, no state feedback)
 - [ ] EcozyHome Smart Ice Machine "Lounge Ice Maker" (Lounge), connected via the EcozyHome skill. Check whether
       the EcozyHome app is a Tuya white-label (Smart Life login works?) → built-in `tuya` integration
 - [x] TP-Link Kasa HS103 "Bedroom Lamp" (.157) and "Kitchen Fan" (.183) → `tplink` (legacy local protocol, no login)
